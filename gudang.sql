@@ -1,4 +1,4 @@
-CREATE DATABASE IF NOT EXISTS manajemen_gudang;
+CREATE DATABASE manajemen_gudang;
 USE manajemen_gudang;
 
 CREATE TABLE role (
