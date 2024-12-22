@@ -6,6 +6,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
+    // Mengubah password yang dimasukkan pengguna menjadi MD5
+    $hashed_password = md5($password);
+
     $stmt = $conn->prepare("SELECT * FROM users WHERE username = ?");
     $stmt->bind_param('s', $username);
     $stmt->execute();
@@ -13,7 +16,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if ($result->num_rows > 0) {
         $user = $result->fetch_assoc();
-        if (password_verify($password, $user['password'])) {
+        
+        if ($hashed_password == $user['password']) {
             $_SESSION['user'] = $user;
             header('Location: index.php');
         } else {

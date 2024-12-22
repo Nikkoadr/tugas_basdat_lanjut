@@ -7,7 +7,7 @@ CREATE TABLE role (
 );
 CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    nama_users VARCHAR(50) NOT NULL UNIQUE,
+    username VARCHAR(50) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
     id_role INT NOT NULL,
     FOREIGN KEY (id_role) REFERENCES role(id)
@@ -75,7 +75,7 @@ CREATE TABLE penugasan_barang (
 INSERT INTO role (nama_role) VALUES 
 ('admin'),
 ('staf');
-INSERT INTO users (nama_users, password, id_role) VALUES 
+INSERT INTO users (username, password, id_role) VALUES 
 ('admin', MD5('admin123'), 1),
 ('staf', MD5('staf123'), 2);
 INSERT INTO kategori (nama_kategori) VALUES 
