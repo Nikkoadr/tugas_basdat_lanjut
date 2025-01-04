@@ -2,21 +2,32 @@
 include 'koneksi.php';
 session_start();
 
+if (isset($_SESSION['user'])) {
+    header('Location: index.php');
+    exit();
+}
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = $_POST['username'];
     $password = $_POST['password'];
     $hash_password = md5($password);
-    $stmt = $conn->prepare("SELECT * FROM users WHERE username = ?");
-    $stmt->bind_param('s', $username);
-    $stmt->execute();
-    $result = $stmt->get_result();
+
+    $query = "SELECT id, username, nama, id_role, password FROM users WHERE username = '$username'";
+    $result = $conn->query($query);
 
     if ($result->num_rows > 0) {
         $user = $result->fetch_assoc();
-        
-        if ($hash_password == $user['password']) {
-            $_SESSION['user'] = $user;
+
+        if ($hash_password === $user['password']) {
+            $_SESSION['user'] = [
+                'id' => $user['id'],
+                'username' => $user['username'],
+                'nama' => $user['nama'],
+                'id_role' => $user['id_role']
+            ];
+
             header('Location: index.php');
+            exit();
         } else {
             $error = 'Password salah';
         }
@@ -25,6 +36,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 ?>
+
+
 <!DOCTYPE html>
 <html>
 <head>

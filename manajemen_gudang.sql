@@ -8,6 +8,7 @@ CREATE TABLE role (
 CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(50) NOT NULL UNIQUE,
+    nama VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
     id_role INT NOT NULL,
     FOREIGN KEY (id_role) REFERENCES role(id)
@@ -33,51 +34,27 @@ CREATE TABLE barang (
     FOREIGN KEY (id_kategori) REFERENCES kategori(id),
     FOREIGN KEY (id_supplier) REFERENCES supplier(id)
 );
+
 CREATE TABLE transaksi (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_transaksi INT AUTO_INCREMENT PRIMARY KEY,
     id_barang INT NOT NULL,
     jenis_transaksi ENUM('masuk', 'keluar') NOT NULL,
     jumlah INT NOT NULL,
     tanggal DATE NOT NULL,
-    keterangan TEXT,
-    FOREIGN KEY (id_barang) REFERENCES barang(id)
+    keterangan VARCHAR(255)
 );
-CREATE TABLE departemen (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nama_departemen VARCHAR(100) NOT NULL,
-    deskripsi TEXT
-);
+
 CREATE TABLE ruangan (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nama_ruangan VARCHAR(100) NOT NULL,
-    lokasi TEXT,
-    id_departemen INT NOT NULL,
-    FOREIGN KEY (id_departemen) REFERENCES departemen(id)
-);
-CREATE TABLE log_inventaris (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    id_barang INT NOT NULL,
-    tanggal_perubahan TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    kolom_berubah VARCHAR(50),
-    nilai_lama TEXT,
-    nilai_baru TEXT,
-    FOREIGN KEY (id_barang) REFERENCES barang(id)
-);
-CREATE TABLE penugasan_barang (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    id_barang INT NOT NULL,
-    id_ruangan INT NOT NULL,
-    tanggal_penugasan DATE NOT NULL,
-    tanggal_pengembalian DATE,
-    FOREIGN KEY (id_barang) REFERENCES barang(id),
-    FOREIGN KEY (id_ruangan) REFERENCES ruangan(id)
+    lokasi TEXT
 );
 INSERT INTO role (nama_role) VALUES 
 ('admin'),
 ('staf');
-INSERT INTO users (username, password, id_role) VALUES 
-('admin', MD5('admin123'), 1),
-('staf', MD5('staf123'), 2);
+INSERT INTO users (username, nama, password, id_role) VALUES 
+('admin','Administator', MD5('admin123'), 1),
+('staf','Staf', MD5('staf123'), 2);
 INSERT INTO kategori (nama_kategori) VALUES 
 ('Elektronik'), 
 ('Alat Tulis'), 
@@ -111,19 +88,8 @@ INSERT INTO transaksi (id_barang, jenis_transaksi, jumlah, tanggal, keterangan) 
 (3, 'masuk', 3, '2024-12-10', 'Tambahan perabotan untuk ruang guru'),
 (6, 'keluar', 2, '2024-11-20', 'Kegiatan olahraga siswa'),
 (5, 'masuk', 1, '2024-12-15', 'Pembelian mikroskop baru');
-INSERT INTO departemen (nama_departemen, deskripsi) VALUES
-('Administrasi', 'Departemen administrasi sekolah'),
-('Teknologi Informasi', 'Departemen pengelolaan teknologi dan informasi'),
-('Perpustakaan', 'Departemen pengelolaan buku dan bahan bacaan'),
-('Olahraga', 'Departemen pengelolaan kegiatan olahraga');
-INSERT INTO ruangan (nama_ruangan, lokasi, id_departemen) VALUES
-('Ruang Guru', 'Lantai 1, Gedung A', 1),
-('Laboratorium Komputer', 'Lantai 2, Gedung B', 2),
-('Perpustakaan', 'Lantai 1, Gedung C', 3),
-('Ruang Olahraga', 'Lantai Dasar, Gedung D', 4);
-INSERT INTO penugasan_barang (id_barang, id_ruangan, tanggal_penugasan, tanggal_pengembalian) VALUES
-(1, 2, '2024-12-15', NULL),
-(3, 1, '2024-12-20', '2024-12-25'),
-(4, 3, '2024-11-10', NULL),
-(6, 4, '2024-12-05', '2024-12-10'),
-(8, 1, '2024-12-01', NULL);
+INSERT INTO ruangan (nama_ruangan, lokasi) VALUES
+('Ruang Guru', 'Lantai 1, Gedung A'),
+('Laboratorium Komputer', 'Lantai 2, Gedung B'),
+('Perpustakaan', 'Lantai 1, Gedung C'),
+('Ruang Olahraga', 'Lantai Dasar, Gedung D');
