@@ -1,10 +1,19 @@
 <?php
 session_start();
-
 if (!isset($_SESSION['user'])) {
     header('Location: login.php');
     exit();
 }
+
+if ($_SESSION['user']['id_role'] !== '1') {
+    $_SESSION['flash_message'] = [
+        'type' => 'warning',
+        'message' => 'Anda tidak memiliki akses ke halaman ini.'
+    ];
+    header('Location: index.php');
+    exit();
+}
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -15,7 +24,7 @@ if (!isset($_SESSION['user'])) {
 <body class="bg-light">
     <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Manajement Gudang</a>
+            <a class="navbar-brand" href="index.php">Manajement Gudang</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
