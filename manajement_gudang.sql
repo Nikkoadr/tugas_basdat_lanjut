@@ -1,5 +1,5 @@
-CREATE DATABASE manajemen_gudang;
-USE manajemen_gudang;
+CREATE DATABASE manajement_gudang;
+USE manajement_gudang;
 
 CREATE TABLE role (
     id INT AUTO_INCREMENT PRIMARY KEY,

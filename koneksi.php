@@ -2,7 +2,7 @@
 $host = 'localhost';
 $user = 'root';
 $pass = '';
-$db = 'manajemen_gudang';
+$db = 'manajement_gudang';
 
 $conn = new mysqli($host, $user, $pass, $db);
 
