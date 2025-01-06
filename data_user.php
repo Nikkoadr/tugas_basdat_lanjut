@@ -58,6 +58,13 @@ $result = $conn->query($query);
         <div class="mb-3">
             <button class="btn btn-success" onclick="location.href='tambah_user.php'">Tambah Karyawan</button>
         </div>
+        <?php if (isset($_SESSION['flash_message'])): ?>
+            <div class="alert alert-<?= $_SESSION['flash_message']['type']; ?> alert-dismissible fade show" role="alert">
+                <?= $_SESSION['flash_message']['message']; ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <?php unset($_SESSION['flash_message']); ?>
+        <?php endif; ?>
         <table class="table table-bordered table-striped mt-3">
             <thead>
                 <tr>
@@ -74,8 +81,8 @@ $result = $conn->query($query);
                         <td><?= $row['nama']; ?></td>
                         <td><?= $row['nama_role']; ?></td>
                         <td>
-                            <button class="btn btn-warning btn-sm" onclick="location.href='edit_barang.php?id=<?php echo $row['id']; ?>'">Edit</button>
-                            <button class="btn btn-danger btn-sm" onclick="if(confirm('Yakin ingin menghapus?')) location.href='hapus_barang.php?id=<?php echo $row['id']; ?>'">Hapus</button>
+                            <button class="btn btn-warning btn-sm" onclick="location.href='edit_user.php?id=<?php echo $row['id']; ?>'">Edit</button>
+                            <button class="btn btn-danger btn-sm" onclick="if(confirm('Yakin ingin menghapus?')) location.href='hapus_user.php?id=<?php echo $row['id']; ?>'">Hapus</button>
                         </td>
                     </tr>
                 <?php endwhile; ?>

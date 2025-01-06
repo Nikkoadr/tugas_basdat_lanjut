@@ -7,39 +7,10 @@ if (!isset($_SESSION['user'])) {
     exit();
 }
 
-if ($_SESSION['user']['id_role'] !== '1') {
-    $_SESSION['flash_message'] = [
-        'type' => 'warning',
-        'message' => 'Anda tidak memiliki akses ke halaman ini.'
-    ];
-    header('Location: index.php');
-    exit();
-}
-
 $kategori_query = "SELECT id, nama_kategori FROM kategori";
 $supplier_query = "SELECT id, nama_supplier FROM supplier";
 $kategori_result = $conn->query($kategori_query);
 $supplier_result = $conn->query($supplier_query);
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $kode_inventaris = $_POST['kode_inventaris'];
-    $nama_barang = $_POST['nama_barang'];
-    $id_kategori = $_POST['id_kategori'];
-    $tahun_pembelian = $_POST['tahun_pembelian'];
-    $jumlah = $_POST['jumlah'];
-    $id_supplier = $_POST['id_supplier'];
-
-    $query = "INSERT INTO barang (kode_inventaris, nama_barang, id_kategori, tahun_pembelian, jumlah, id_supplier) 
-            VALUES ('$kode_inventaris', '$nama_barang', '$id_kategori', '$tahun_pembelian', '$jumlah', '$id_supplier')";
-
-    if ($conn->query($query) === TRUE) {
-        header('Location: data_barang.php');
-        exit();
-    } else {
-        $error = "Gagal menambahkan barang: " . $conn->error;
-    }
-}
-
 ?>
 <!DOCTYPE html>
 <html>
@@ -53,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <?php if (isset($error)): ?>
             <div class="alert alert-danger"> <?php echo htmlspecialchars($error); ?> </div>
         <?php endif; ?>
-        <form method="POST" class="mt-4">
+        <form method="POST" action="create_barang.php" class="mt-4">
             <div class="mb-3">
                 <label for="kode_inventaris" class="form-label">Kode Inventaris</label>
                 <input type="text" class="form-control" id="kode_inventaris" name="kode_inventaris" value="INV/<?php echo date('Y/m/d'); ?>/<?php echo rand(1000, 9999); ?>" readonly required>

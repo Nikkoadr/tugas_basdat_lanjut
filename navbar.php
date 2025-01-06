@@ -5,7 +5,7 @@
     
     <?php if ($_SESSION['user']['id_role'] === '1'): ?>
         <li class="nav-item">
-            <a class="nav-link" href="user.php">User</a>
+            <a class="nav-link" href="data_user.php">User</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="supplier.php">Supplier</a>
@@ -16,7 +16,7 @@
         <a class="nav-link" href="kategori.php">Kategori</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="ruangan.php">Ruangan</a>
+        <a class="nav-link" href="lokasi.php">lokasi</a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="data_barang.php">Data Barang</a>

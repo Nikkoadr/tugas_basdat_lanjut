@@ -7,15 +7,6 @@ if (!isset($_SESSION['user'])) {
     exit();
 }
 
-if ($_SESSION['user']['id_role'] !== '1') {
-    $_SESSION['flash_message'] = [
-        'type' => 'warning',
-        'message' => 'Anda tidak memiliki akses ke halaman ini.'
-    ];
-    header('Location: index.php');
-    exit();
-}
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $kode_inventaris = $_POST['kode_inventaris'];
     $nama_barang = $_POST['nama_barang'];
@@ -23,6 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $tahun_pembelian = $_POST['tahun_pembelian'];
     $stok = $_POST['stok'];
     $id_supplier = $_POST['id_supplier'];
+    $id_user = $_SESSION['user']['id'];
 
     if ($kode_inventaris && $nama_barang && $id_kategori && $tahun_pembelian && $stok && $id_supplier) {
         $query = "
@@ -32,7 +24,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 id_kategori = $id_kategori,
                 tahun_pembelian = '$tahun_pembelian',
                 jumlah = $stok,
-                id_supplier = $id_supplier
+                id_supplier = $id_supplier,
+                id_user = $id_user
             WHERE 
                 kode_inventaris = '$kode_inventaris'
         ";

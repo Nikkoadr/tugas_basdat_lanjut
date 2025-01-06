@@ -7,19 +7,11 @@ if (!isset($_SESSION['user'])) {
     exit();
 }
 
-if ($_SESSION['user']['id_role'] !== '1') {
-    $_SESSION['flash_message'] = [
-        'type' => 'warning',
-        'message' => 'Anda tidak memiliki akses ke halaman ini.'
-    ];
-    header('Location: index.php');
-    exit();
-}
-
-$query = "SELECT barang.*, kategori.nama_kategori AS kategori, supplier.nama_supplier AS supplier 
+$query = "SELECT barang.*, kategori.nama_kategori AS kategori, supplier.nama_supplier AS supplier, users.nama AS nama_penginput 
         FROM barang 
         JOIN kategori ON barang.id_kategori = kategori.id 
-        JOIN supplier ON barang.id_supplier = supplier.id";
+        JOIN supplier ON barang.id_supplier = supplier.id
+        JOIN users ON barang.id_user = users.id";
 $result = $conn->query($query);
 ?>
 <!DOCTYPE html>
@@ -64,18 +56,20 @@ $result = $conn->query($query);
                     <th>Tahun Pembelian</th>
                     <th>Jumlah</th>
                     <th>Supplier</th>
+                    <th>Penginput</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
             <tbody>
                 <?php while ($row = $result->fetch_assoc()): ?>
                     <tr>
-                        <td><?php echo htmlspecialchars($row['kode_inventaris']); ?></td>
-                        <td><?php echo htmlspecialchars($row['nama_barang']); ?></td>
-                        <td><?php echo htmlspecialchars($row['kategori']); ?></td>
-                        <td><?php echo htmlspecialchars($row['tahun_pembelian']); ?></td>
-                        <td><?php echo htmlspecialchars($row['jumlah']); ?></td>
-                        <td><?php echo htmlspecialchars($row['supplier']); ?></td>
+                        <td><?= $row['kode_inventaris']; ?></td>
+                        <td><?= $row['nama_barang']; ?></td>
+                        <td><?= $row['kategori']; ?></td>
+                        <td><?= $row['tahun_pembelian']; ?></td>
+                        <td><?= $row['jumlah']; ?></td>
+                        <td><?= $row['supplier']; ?></td>
+                        <td><?= $row['nama_penginput']; ?></td>
                         <td>
                             <button class="btn btn-warning btn-sm" onclick="location.href='edit_barang.php?id=<?php echo $row['id']; ?>'">Edit</button>
                             <button class="btn btn-danger btn-sm" onclick="if(confirm('Yakin ingin menghapus?')) location.href='hapus_barang.php?id=<?php echo $row['id']; ?>'">Hapus</button>

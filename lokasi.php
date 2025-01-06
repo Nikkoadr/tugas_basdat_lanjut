@@ -7,22 +7,13 @@ if (!isset($_SESSION['user'])) {
     exit();
 }
 
-if ($_SESSION['user']['id_role'] !== '1') {
-    $_SESSION['flash_message'] = [
-        'type' => 'warning',
-        'message' => 'Anda tidak memiliki akses ke halaman ini.'
-    ];
-    header('Location: index.php');
-    exit();
-}
-
 $query = "
     SELECT 
-        ruangan.id, 
-        ruangan.nama_ruangan, 
-        ruangan.lokasi
+        lokasi.id, 
+        lokasi.nama_ruangan, 
+        lokasi.lokasi
     FROM 
-        ruangan
+        lokasi
 ";
 $result = $conn->query($query);
 ?>
@@ -51,13 +42,13 @@ $result = $conn->query($query);
     <div class="container mt-5">
         <h1>Data Ruangan</h1>
         <div class="mb-3">
-            <button class="btn btn-success" onclick="location.href='tambah_user.php'">Tambah Ruangan</button>
+            <button class="btn btn-success" onclick="location.href='tambah_lokasi.php'">Tambah Ruangan</button>
         </div>
         <table class="table table-bordered table-striped mt-3">
             <thead>
                 <tr>
                     <th>Nama Ruangan</th>
-                    <th>Alamat</th>
+                    <th>Lokasi</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
@@ -67,8 +58,8 @@ $result = $conn->query($query);
                         <td><?= $row['nama_ruangan']; ?></td>
                         <td><?= $row['lokasi']; ?></td>
                         <td>
-                            <button class="btn btn-warning btn-sm" onclick="location.href='edit_barang.php?id=<?php echo $row['id']; ?>'">Edit</button>
-                            <button class="btn btn-danger btn-sm" onclick="if(confirm('Yakin ingin menghapus?')) location.href='hapus_barang.php?id=<?php echo $row['id']; ?>'">Hapus</button>
+                            <button class="btn btn-warning btn-sm" onclick="location.href='edit_lokasi.php?id=<?php echo $row['id']; ?>'">Edit</button>
+                            <button class="btn btn-danger btn-sm" onclick="if(confirm('Yakin ingin menghapus?')) location.href='hapus_lokasi.php?id=<?php echo $row['id']; ?>'">Hapus</button>
                         </td>
                     </tr>
                 <?php endwhile; ?>

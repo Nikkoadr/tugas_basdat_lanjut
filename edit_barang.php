@@ -7,15 +7,6 @@ if (!isset($_SESSION['user'])) {
     exit();
 }
 
-if ($_SESSION['user']['id_role'] !== '1') {
-    $_SESSION['flash_message'] = [
-        'type' => 'warning',
-        'message' => 'Anda tidak memiliki akses ke halaman ini.'
-    ];
-    header('Location: index.php');
-    exit();
-}
-
 if (isset($_GET['id'])) {
     $id = intval($_GET['id']);
     $query = "
