@@ -9,10 +9,11 @@ if (!isset($_SESSION['user'])) {
 
 $query = "
     SELECT 
-        Kategori.id, 
-        Kategori.nama_kategori
+        lokasi.id, 
+        lokasi.nama_ruangan, 
+        lokasi.lokasi
     FROM 
-        kategori
+        lokasi
 ";
 $result = $conn->query($query);
 ?>
@@ -20,7 +21,7 @@ $result = $conn->query($query);
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Data Kategori</title>
+    <title>Data Supplier</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="bg-light">
@@ -39,24 +40,33 @@ $result = $conn->query($query);
         </div>
     </nav>
     <div class="container mt-5">
-        <h1>Data Kategori</h1>
+        <h1>Data Ruangan</h1>
         <div class="mb-3">
-            <button class="btn btn-success" onclick="location.href='tambah_user.php'">Tambah Kategori</button>
+            <button class="btn btn-success" onclick="location.href='tambah_lokasi.php'">Tambah Ruangan</button>
         </div>
+            <?php if (isset($_SESSION['flash_message'])): ?>
+                <div class="alert alert-<?= $_SESSION['flash_message']['type']; ?> alert-dismissible fade show" role="alert">
+                    <?= $_SESSION['flash_message']['message']; ?>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                <?php unset($_SESSION['flash_message']); ?>
+            <?php endif; ?>
         <table class="table table-bordered table-striped mt-3">
             <thead>
                 <tr>
-                    <th>Nama Kategori</th>
+                    <th>Nama Ruangan</th>
+                    <th>Lokasi</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
             <tbody>
                 <?php while ($row = $result->fetch_assoc()): ?>
                     <tr>
-                        <td><?= $row['nama_kategori']; ?></td>
+                        <td><?= $row['nama_ruangan']; ?></td>
+                        <td><?= $row['lokasi']; ?></td>
                         <td>
-                            <button class="btn btn-warning btn-sm" onclick="location.href='edit_barang.php?id=<?php echo $row['id']; ?>'">Edit</button>
-                            <button class="btn btn-danger btn-sm" onclick="if(confirm('Yakin ingin menghapus?')) location.href='hapus_barang.php?id=<?php echo $row['id']; ?>'">Hapus</button>
+                            <button class="btn btn-warning btn-sm" onclick="location.href='edit_lokasi.php?id=<?php echo $row['id']; ?>'">Edit</button>
+                            <button class="btn btn-danger btn-sm" onclick="if(confirm('Yakin ingin menghapus?')) location.href='hapus_lokasi.php?id=<?php echo $row['id']; ?>'">Hapus</button>
                         </td>
                     </tr>
                 <?php endwhile; ?>

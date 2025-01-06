@@ -7,23 +7,12 @@ if (!isset($_SESSION['user'])) {
     exit();
 }
 
-if ($_SESSION['user']['id_role'] !== '1') {
-    $_SESSION['flash_message'] = [
-        'type' => 'warning',
-        'message' => 'Anda tidak memiliki akses ke halaman ini.'
-    ];
-    header('Location: index.php');
-    exit();
-}
-
 $query = "
     SELECT 
-        supplier.id, 
-        supplier.nama_supplier, 
-        supplier.kontak, 
-        supplier.alamat 
+        Kategori.id, 
+        Kategori.nama_kategori
     FROM 
-        supplier
+        kategori
 ";
 $result = $conn->query($query);
 ?>
@@ -31,7 +20,7 @@ $result = $conn->query($query);
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Data Supplier</title>
+    <title>Data Kategori</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="bg-light">
@@ -50,28 +39,31 @@ $result = $conn->query($query);
         </div>
     </nav>
     <div class="container mt-5">
-        <h1>Data Supplier</h1>
+        <h1>Data Kategori</h1>
         <div class="mb-3">
-            <button class="btn btn-success" onclick="location.href='tambah_user.php'">Tambah Supplier</button>
+            <button class="btn btn-success" onclick="location.href='tambah_kategori.php'">Tambah Kategori</button>
         </div>
+            <?php if (isset($_SESSION['flash_message'])): ?>
+                <div class="alert alert-<?= $_SESSION['flash_message']['type']; ?> alert-dismissible fade show" role="alert">
+                    <?= $_SESSION['flash_message']['message']; ?>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                <?php unset($_SESSION['flash_message']); ?>
+            <?php endif; ?>
         <table class="table table-bordered table-striped mt-3">
             <thead>
                 <tr>
-                    <th>Nama Supplier</th>
-                    <th>Kontak</th>
-                    <th>Alamat</th>
+                    <th>Nama Kategori</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
             <tbody>
                 <?php while ($row = $result->fetch_assoc()): ?>
                     <tr>
-                        <td><?= $row['nama_supplier']; ?></td>
-                        <td><?= $row['kontak']; ?></td>
-                        <td><?= $row['alamat']; ?></td>
+                        <td><?= $row['nama_kategori']; ?></td>
                         <td>
-                            <button class="btn btn-warning btn-sm" onclick="location.href='edit_barang.php?id=<?php echo $row['id']; ?>'">Edit</button>
-                            <button class="btn btn-danger btn-sm" onclick="if(confirm('Yakin ingin menghapus?')) location.href='hapus_barang.php?id=<?php echo $row['id']; ?>'">Hapus</button>
+                            <button class="btn btn-warning btn-sm" onclick="location.href='edit_kategori.php?id=<?php echo $row['id']; ?>'">Edit</button>
+                            <button class="btn btn-danger btn-sm" onclick="if(confirm('Yakin ingin menghapus?')) location.href='hapus_kategori.php?id=<?php echo $row['id']; ?>'">Hapus</button>
                         </td>
                     </tr>
                 <?php endwhile; ?>

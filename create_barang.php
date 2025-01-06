@@ -21,6 +21,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($conn->query($query) === TRUE) {
         header('Location: data_barang.php');
+        $_SESSION['flash_message'] = [
+        'type' => 'success',
+        'message' => 'Barang berhasil ditambahkan.'
+    ];
         exit();
     } else {
         $error = "Gagal menambahkan barang: " . $conn->error;

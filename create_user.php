@@ -32,6 +32,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($conn->query($query) === TRUE) {
             header('Location: data_user.php');
+            $_SESSION['flash_message'] = [
+                'type' => 'success',
+                'message' => 'User berhasil ditambahkan.'
+            ];
             exit();
         } else {
             $error = "Gagal menambahkan user: " . $conn->error;

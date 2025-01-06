@@ -8,15 +8,15 @@
             <a class="nav-link" href="data_user.php">User</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="supplier.php">Supplier</a>
+            <a class="nav-link" href="data_supplier.php">Supplier</a>
         </li>
     <?php endif; ?>
     
     <li class="nav-item">
-        <a class="nav-link" href="kategori.php">Kategori</a>
+        <a class="nav-link" href="data_kategori.php">Kategori</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="lokasi.php">lokasi</a>
+        <a class="nav-link" href="data_lokasi.php">lokasi</a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="data_barang.php">Data Barang</a>
