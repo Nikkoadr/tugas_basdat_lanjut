@@ -25,12 +25,12 @@ if (isset($_GET['id'])) {
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Edit User</title>
+    <title>Edit Lokasi</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">    
 </head>
 <body>
 <div class="container mt-5">
-    <h1>Edit User</h1>
+    <h1>Edit Lokasi</h1>
     <form method="POST" action="update_lokasi.php">
         <input type="hidden" name="id" value="<?= $lokasi['id']; ?>">
         <div class="mb-3">

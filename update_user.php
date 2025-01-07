@@ -38,7 +38,7 @@ if (isset($_POST['id']) && $_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($conn->query($query)) {
             $_SESSION['flash_message'] = [
                 'type' => 'success',
-                'message' => 'Data pengguna berhasil diperbarui.'
+                'message' => 'Data Karyawan berhasil diperbarui.'
             ];
         } else {
             $_SESSION['flash_message'] = [

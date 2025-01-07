@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($conn->query($query)) {
             $_SESSION['flash_message'] = [
                 'type' => 'success',
-                'message' => 'Data barang berhasil diperbarui.'
+                'message' => 'Data Kategori berhasil diperbarui.'
             ];
         } else {
             $_SESSION['flash_message'] = [

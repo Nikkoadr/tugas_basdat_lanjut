@@ -20,14 +20,18 @@ if (!isset($_SESSION['user'])) {
         <?php if (isset($error)): ?>
             <div class="alert alert-danger"> <?php echo htmlspecialchars($error); ?> </div>
         <?php endif; ?>
-        <form method="POST" action="create_lokasi.php" class="mt-4">
+        <form method="POST" action="create_supplier.php" class="mt-4">
             <div class="mb-3">
-                <label for="nama_ruangan" class="form-label">Nama supplier</label>
-                <input type="text" class="form-control" id="nama_ruangan" name="nama_ruangan" required>
+                <label for="nama_supplier" class="form-label">Nama supplier</label>
+                <input type="text" class="form-control" id="nama_supplier" name="nama_supplier" required>
             </div>
             <div class="mb-3">
-                <label for="lokasi" class="form-label">Lokasi</label>
-                <input type="text" class="form-control" id="lokasi" name="lokasi" required>
+                <label for="kontak" class="form-label">Kontak</label>
+                <input type="text" class="form-control" id="kontak" name="kontak" required>
+            </div>
+            <div class="mb-3">
+                <label for="alamat" class="form-label">Alamat</label>
+                <input type="text" class="form-control" id="alamat" name="alamat" required>
             </div>
             <button type="submit" class="btn btn-primary">Tambah</button>
             <a href="data_kategori.php" class="btn btn-secondary">Kembali</a>
