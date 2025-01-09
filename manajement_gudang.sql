@@ -51,7 +51,11 @@ CREATE TABLE lokasi (
     nama_ruangan VARCHAR(100) NOT NULL,
     lokasi TEXT
 );
-
+CREATE TABLE log_aktivitas (
+    id_log INT AUTO_INCREMENT PRIMARY KEY,
+    deskripsi TEXT NOT NULL,
+    waktu DATETIME NOT NULL
+);
 INSERT INTO role (nama_role) VALUES 
 ('admin'),
 ('staf');
@@ -98,3 +102,15 @@ INSERT INTO lokasi (nama_ruangan, lokasi) VALUES
 ('Laboratorium ANBK', 'Lantai 2, Gedung 2'),
 ('Ruang Guru', 'Lantai 1, Gedung 2'),
 ('Ruang Alat', 'Lantai Dasar, Gedung TKJ');
+
+DELIMITER $$
+
+CREATE TRIGGER setelah_barang_ditambah
+AFTER INSERT ON barang
+FOR EACH ROW
+BEGIN
+    INSERT INTO log_aktivitas (deskripsi, waktu)
+    VALUES (CONCAT('Barang ', NEW.nama_barang, ' ditambahkan.'), NOW());
+END$$
+
+DELIMITER ;

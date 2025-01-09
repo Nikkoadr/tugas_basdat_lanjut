@@ -1,6 +1,7 @@
 <?php
 session_start();
 include 'koneksi.php';
+include 'fungsi.php';
 
 if (!isset($_SESSION['user'])) {
     header('Location: login.php');
@@ -16,19 +17,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id_supplier = $_POST['id_supplier'];
     $id_user = $_SESSION['user']['id'];
 
-    $query = "INSERT INTO barang (kode_inventaris, nama_barang, id_kategori, tahun_pembelian, jumlah, id_supplier, id_user) 
-            VALUES ('$kode_inventaris', '$nama_barang', '$id_kategori', '$tahun_pembelian', '$jumlah', '$id_supplier', '$id_user')";
+    $result = tambahBarang($kode_inventaris, $nama_barang, $id_kategori, $tahun_pembelian, $jumlah, $id_supplier, $id_user);
 
-    if ($conn->query($query) === TRUE) {
-        header('Location: data_barang.php');
+    if ($result['status'] === 'success') {
         $_SESSION['flash_message'] = [
-        'type' => 'success',
-        'message' => 'Barang berhasil ditambahkan.'
-    ];
+            'type' => 'success',
+            'message' => $result['message']
+        ];
+        header('Location: data_barang.php');
         exit();
     } else {
-        $error = "Gagal menambahkan barang: " . $conn->error;
+        $error = $result['message'];
     }
 }
-
 ?>
