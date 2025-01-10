@@ -25,6 +25,6 @@
         <a class="nav-link" href="transaksi.php">Transaksi</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="log_barang.php">Log Barang</a>
+        <a class="nav-link" href="data_log.php">Log</a>
     </li>
 </ul>

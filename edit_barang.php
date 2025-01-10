@@ -64,7 +64,7 @@ $supplierOptions = $supplierResult->fetch_all(MYSQLI_ASSOC);
         </div>
         <div class="mb-3">
             <label for="tahun_pembelian" class="form-label">Tahun Pembelian</label>
-            <input type="text" class="form-control" id="tahun_pembelian" name="tahun_pembelian" value="<?= $barang['tahun_pembelian']; ?>" required>
+            <input type="number" class="form-control" id="tahun_pembelian" name="tahun_pembelian" value="<?= $barang['tahun_pembelian']; ?>" required>
         </div>
         <div class="mb-3">
             <label for="stok" class="form-label">Stok</label>

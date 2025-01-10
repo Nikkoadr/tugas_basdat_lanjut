@@ -114,3 +114,27 @@ BEGIN
 END$$
 
 DELIMITER ;
+
+DELIMITER $$
+
+CREATE TRIGGER setelah_barang_diupdate
+AFTER UPDATE ON barang
+FOR EACH ROW
+BEGIN
+    INSERT INTO log_aktivitas (deskripsi, waktu)
+    VALUES (CONCAT('Barang ', OLD.nama_barang, ' diubah menjadi ', NEW.nama_barang, '.'), NOW());
+END$$
+
+DELIMITER ;
+
+DELIMITER $$
+
+CREATE TRIGGER setelah_barang_dihapus
+AFTER DELETE ON barang
+FOR EACH ROW
+BEGIN
+    INSERT INTO log_aktivitas (deskripsi, waktu)
+    VALUES (CONCAT('Barang ', OLD.nama_barang, ' dihapus.'), NOW());
+END$$
+
+DELIMITER ;
