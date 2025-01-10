@@ -1,9 +1,9 @@
 <?php
-function tambahBarang($kode_inventaris, $nama_barang, $id_kategori, $tahun_pembelian, $jumlah, $id_supplier, $id_user) {
+function tambahBarang($kode_inventaris, $nama_barang, $id_kategori, $tahun_pembelian, $jumlah, $id_supplier, $gambar, $id_user) {
     global $conn;
 
-    $query = "INSERT INTO barang (kode_inventaris, nama_barang, id_kategori, tahun_pembelian, jumlah, id_supplier, id_user) 
-            VALUES ('$kode_inventaris', '$nama_barang', '$id_kategori', '$tahun_pembelian', '$jumlah', '$id_supplier', '$id_user')";
+    $query = "INSERT INTO barang (kode_inventaris, nama_barang, id_kategori, tahun_pembelian, jumlah, id_supplier, gambar, id_user) 
+            VALUES ('$kode_inventaris', '$nama_barang', '$id_kategori', '$tahun_pembelian', '$jumlah', '$id_supplier', '$gambar','$id_user')";
 
     if ($conn->query($query) === TRUE) {
         return [

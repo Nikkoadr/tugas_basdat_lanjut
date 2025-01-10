@@ -24,7 +24,7 @@ $supplier_result = $conn->query($supplier_query);
         <?php if (isset($error)): ?>
             <div class="alert alert-danger"> <?php echo htmlspecialchars($error); ?> </div>
         <?php endif; ?>
-        <form method="POST" action="create_barang.php" class="mt-4">
+        <form method="POST" action="create_barang.php" enctype="multipart/form-data" class="mt-4">
             <div class="mb-3">
                 <label for="kode_inventaris" class="form-label">Kode Inventaris</label>
                 <input type="text" class="form-control" id="kode_inventaris" name="kode_inventaris" value="INV/<?php echo date('Y/m/d'); ?>/<?php echo rand(1000, 9999); ?>" readonly required>
@@ -39,7 +39,7 @@ $supplier_result = $conn->query($supplier_query);
                     <option value="" disabled selected>Pilih Kategori</option>
                     <?php while ($kategori = $kategori_result->fetch_assoc()): ?>
                         <option value="<?php echo $kategori['id']; ?>">
-                            <?php echo htmlspecialchars($kategori['nama_kategori']); ?>
+                            <?=$kategori['nama_kategori']; ?>
                         </option>
                     <?php endwhile; ?>
                 </select>
@@ -58,10 +58,14 @@ $supplier_result = $conn->query($supplier_query);
                     <option value="" disabled selected>Pilih Supplier</option>
                     <?php while ($supplier = $supplier_result->fetch_assoc()): ?>
                         <option value="<?php echo $supplier['id']; ?>">
-                            <?php echo htmlspecialchars($supplier['nama_supplier']); ?>
+                            <?=$supplier['nama_supplier']; ?>
                         </option>
                     <?php endwhile; ?>
                 </select>
+            </div>
+            <div class="mb-3">
+                <label for="gambar" class="form-label">Upload Gambar</label>
+                <input type="file" name="gambar" id="gambar" class="form-control">
             </div>
             <button type="submit" class="btn btn-primary">Tambah</button>
             <a href="data_barang.php" class="btn btn-secondary">Kembali</a>

@@ -22,7 +22,7 @@
         <a class="nav-link" href="data_barang.php">Data Barang</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="transaksi.php">Transaksi</a>
+        <a class="nav-link" href="data_transaksi.php">Transaksi</a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="data_log.php">Log</a>

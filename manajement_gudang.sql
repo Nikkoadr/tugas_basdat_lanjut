@@ -31,6 +31,7 @@ CREATE TABLE barang (
     tahun_pembelian INT NOT NULL,
     jumlah INT NOT NULL,
     id_supplier INT NOT NULL,
+    gambar VARCHAR(255) NULL,
     id_user INT NOT NULL,
     FOREIGN KEY (id_kategori) REFERENCES kategori(id),
     FOREIGN KEY (id_supplier) REFERENCES supplier(id),
@@ -40,7 +41,8 @@ CREATE TABLE barang (
 CREATE TABLE transaksi (
     id_transaksi INT AUTO_INCREMENT PRIMARY KEY,
     id_barang INT NOT NULL,
-    jenis_transaksi ENUM('masuk', 'keluar') NOT NULL,
+    id_lokasi INT NOT NULL,
+    jenis_transaksi ENUM('keluar', 'kembali') NOT NULL,
     jumlah INT NOT NULL,
     tanggal DATE NOT NULL,
     keterangan VARCHAR(255)
@@ -90,13 +92,6 @@ INSERT INTO barang (kode_inventaris, nama_barang, id_kategori, tahun_pembelian, 
 ('INV/2025/01/07/0009', 'Komputer Desktop', 1, 2025, 5, 1, 1),
 ('INV/2025/01/07/0010', 'LAN Tester', 5, 2025, 10, 4, 2);
 
-INSERT INTO transaksi (id_barang, jenis_transaksi, jumlah, tanggal, keterangan) VALUES
-(1, 'masuk', 5, '2024-12-01', 'Pembelian tambahan laptop'),
-(2, 'keluar', 1, '2024-12-05', 'Dipinjam untuk presentasi kelas'),
-(3, 'masuk', 3, '2024-12-10', 'Tambahan perabotan untuk ruang guru'),
-(6, 'keluar', 2, '2024-11-20', 'Kegiatan olahraga siswa'),
-(5, 'masuk', 1, '2024-12-15', 'Pembelian mikroskop baru');
-
 INSERT INTO lokasi (nama_ruangan, lokasi) VALUES
 ('Ruang TKJ 1', 'Lantai 2, Gedung 2'),
 ('Laboratorium ANBK', 'Lantai 2, Gedung 2'),
@@ -121,11 +116,40 @@ CREATE TRIGGER setelah_barang_diupdate
 AFTER UPDATE ON barang
 FOR EACH ROW
 BEGIN
-    INSERT INTO log_aktivitas (deskripsi, waktu)
-    VALUES (CONCAT('Barang ', OLD.nama_barang, ' diubah menjadi ', NEW.nama_barang, '.'), NOW());
+    IF OLD.jumlah > NEW.jumlah THEN
+        INSERT INTO log_aktivitas (deskripsi, waktu)
+        VALUES (
+            CONCAT(
+                'Stok barang ', OLD.nama_barang, 
+                ' berkurang dari ', OLD.jumlah, 
+                ' menjadi ', NEW.jumlah, '.'
+            ),
+            NOW()
+        );
+
+    ELSEIF OLD.jumlah < NEW.jumlah THEN
+        INSERT INTO log_aktivitas (deskripsi, waktu)
+        VALUES (
+            CONCAT(
+                'Stok barang ', OLD.nama_barang, 
+                ' bertambah dari ', OLD.jumlah, 
+                ' menjadi ', NEW.jumlah, '.'
+            ),
+            NOW()
+        );
+
+    ELSE
+        INSERT INTO log_aktivitas (deskripsi, waktu)
+        VALUES (
+            CONCAT('Barang ', OLD.nama_barang, ' diubah menjadi ', NEW.nama_barang, '.'),
+            NOW()
+        );
+    END IF;
 END$$
 
 DELIMITER ;
+
+
 
 DELIMITER $$
 
@@ -135,6 +159,44 @@ FOR EACH ROW
 BEGIN
     INSERT INTO log_aktivitas (deskripsi, waktu)
     VALUES (CONCAT('Barang ', OLD.nama_barang, ' dihapus.'), NOW());
+END$$
+
+DELIMITER ;
+
+DELIMITER $$
+
+CREATE TRIGGER log_barang_keluar
+AFTER INSERT ON transaksi
+FOR EACH ROW
+BEGIN
+    IF NEW.jenis_transaksi = 'keluar' THEN
+        INSERT INTO log_aktivitas (deskripsi, waktu)
+        VALUES (
+            CONCAT(
+                'Barang keluar - Nama Barang: ', 
+                (SELECT nama_barang FROM barang WHERE id = NEW.id_barang),
+                ', Jumlah: ', NEW.jumlah
+            ),
+            NOW()
+        );
+    END IF;
+END$$
+
+CREATE TRIGGER log_barang_kembali
+AFTER INSERT ON transaksi
+FOR EACH ROW
+BEGIN
+    IF NEW.jenis_transaksi = 'kembali' THEN
+        INSERT INTO log_aktivitas (deskripsi, waktu)
+        VALUES (
+            CONCAT(
+                'Barang kembali - Nama Barang: ', 
+                (SELECT nama_barang FROM barang WHERE id = NEW.id_barang),
+                ', Jumlah: ', NEW.jumlah
+            ),
+            NOW()
+        );
+    END IF;
 END$$
 
 DELIMITER ;

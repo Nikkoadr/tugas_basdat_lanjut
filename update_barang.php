@@ -15,8 +15,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stok = $_POST['stok'];
     $id_supplier = $_POST['id_supplier'];
     $id_user = $_SESSION['user']['id'];
+    $gambar = null;
 
     if ($kode_inventaris && $nama_barang && $id_kategori && $tahun_pembelian && $stok && $id_supplier) {
+        if (isset($_FILES['gambar']) && $_FILES['gambar']['error'] === UPLOAD_ERR_OK) {
+            $folder = 'upload/';
+            $nama_file = basename($_FILES['gambar']['name']);
+            $target = $folder . $nama_file;
+
+            if (move_uploaded_file($_FILES['gambar']['tmp_name'], $target)) {
+                $gambar = $nama_file;
+            } else {
+                $_SESSION['flash_message'] = [
+                    'type' => 'danger',
+                    'message' => 'Gagal mengunggah gambar.'
+                ];
+                header('Location: data_barang.php');
+                exit();
+            }
+        }
+
         $query = "
             UPDATE barang
             SET 
@@ -25,10 +43,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 tahun_pembelian = '$tahun_pembelian',
                 jumlah = $stok,
                 id_supplier = $id_supplier,
-                id_user = $id_user
-            WHERE 
-                kode_inventaris = '$kode_inventaris'
-        ";
+                id_user = $id_user";
+
+        if ($gambar !== null) {
+            $query .= ", gambar = '$gambar'";
+        }
+
+        $query .= " WHERE kode_inventaris = '$kode_inventaris'";
 
         if ($conn->query($query)) {
             $_SESSION['flash_message'] = [
