@@ -1,6 +1,6 @@
 <?php
     $host = 'localhost';
-    $user = 'root';
+    $user = 'tugas';
     $pass = 'pyoSXbaltviBuQh3';
     $db = 'manajement_gudang';
 
