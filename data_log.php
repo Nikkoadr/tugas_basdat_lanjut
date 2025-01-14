@@ -9,7 +9,7 @@ if (!isset($_SESSION['user'])) {
 
 $query = "
     SELECT 
-        id_log, 
+        id, 
         deskripsi, 
         waktu
     FROM 
@@ -51,7 +51,7 @@ $result = $conn->query($query);
             <tbody>
                 <?php while ($row = $result->fetch_assoc()): ?>
                     <tr>
-                        <td><?= htmlspecialchars($row['id_log']); ?></td>
+                        <td><?= htmlspecialchars($row['id']); ?></td>
                         <td><?= htmlspecialchars($row['deskripsi']); ?></td>
                         <td><?= htmlspecialchars($row['waktu']); ?></td>
                     </tr>

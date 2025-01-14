@@ -1,7 +1,7 @@
 <?php
     $host = 'localhost';
     $user = 'tugas';
-    $pass = 'pyoSXbaltviBuQh3';
+    $pass = '2kfgwaCbvbe70Ngk';
     $db = 'manajement_gudang';
 
     $conn = new mysqli($host, $user, $pass, $db);

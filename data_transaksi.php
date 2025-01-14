@@ -43,11 +43,11 @@ unset($_SESSION['success']);
         <h1>Transaksi Barang</h1>
 
         <?php if ($error): ?>
-            <div class="alert alert-danger"><?= htmlspecialchars($error); ?></div>
+            <div class="alert alert-danger"><?= $error; ?></div>
         <?php endif; ?>
 
         <?php if ($success): ?>
-            <div class="alert alert-success"><?= htmlspecialchars($success); ?></div>
+            <div class="alert alert-success"><?= $success; ?></div>
         <?php endif; ?>
 
         <form method="POST" action="proses_transaksi.php">
@@ -61,8 +61,8 @@ unset($_SESSION['success']);
                 <select class="form-select" id="id_lokasi" name="id_lokasi" required>
                     <option value="" disabled selected>Pilih Lokasi</option>
                     <?php while ($lokasi = $lokasi_result->fetch_assoc()): ?>
-                        <option value="<?= htmlspecialchars($lokasi['id']); ?>">
-                            <?= htmlspecialchars($lokasi['nama_ruangan']) . ' - ' . htmlspecialchars($lokasi['lokasi']); ?>
+                        <option value="<?= $lokasi['id']; ?>">
+                            <?= $lokasi['nama_ruangan'] . ' - ' . $lokasi['lokasi']; ?>
                         </option>
                     <?php endwhile; ?>
                 </select>

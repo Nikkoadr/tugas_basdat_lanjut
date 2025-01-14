@@ -39,7 +39,7 @@ CREATE TABLE barang (
 );
 
 CREATE TABLE transaksi (
-    id_transaksi INT AUTO_INCREMENT PRIMARY KEY,
+    id INT AUTO_INCREMENT PRIMARY KEY,
     id_barang INT NOT NULL,
     id_lokasi INT NOT NULL,
     jenis_transaksi ENUM('keluar', 'kembali') NOT NULL,
@@ -54,7 +54,7 @@ CREATE TABLE lokasi (
     lokasi TEXT
 );
 CREATE TABLE log_aktivitas (
-    id_log INT AUTO_INCREMENT PRIMARY KEY,
+    id INT AUTO_INCREMENT PRIMARY KEY,
     deskripsi TEXT NOT NULL,
     waktu DATETIME NOT NULL
 );
