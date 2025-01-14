@@ -9,8 +9,8 @@ if (!isset($_SESSION['user'])) {
 
 $query = "
     SELECT 
-        Kategori.id, 
-        Kategori.nama_kategori
+        kategori.id, 
+        kategori.nama_kategori
     FROM 
         kategori
 ";
