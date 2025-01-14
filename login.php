@@ -48,10 +48,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <h5 class="text-center mb-4">Login Manajement Gudang</h5>
         <form method="post">
             <div class="mb-3">
-                <input type="text" class="form-control" name="username" placeholder="Username" required>
+                <label for="username" class="form-label">Username</label>
+                <input type="text" class="form-control" name="username" placeholder="admin" required>
             </div>
             <div class="mb-3">
-                <input type="password" class="form-control" name="password" placeholder="Password" required>
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" name="password" placeholder="admin123" required>
             </div>
             <button type="submit" class="btn btn-primary w-100">Login</button>
         </form>
